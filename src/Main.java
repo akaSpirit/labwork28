@@ -22,7 +22,7 @@ public class Main {
         Integer speed = 0;
         Double money = new Random().nextDouble(200.0, 501.0);
         Trader trader = new Trader(100.0, speed, money);
-        purchaseGoods(trader, trader.goodsList);
+        purchaseGoods(trader);
         int distance = chooseCity(trader);
         int day = 0;
         System.out.println("+-------------+----------------+----------------------------------------------------------+");
@@ -44,6 +44,17 @@ public class Main {
             System.out.printf("| %-11s | %-14s | %-56s |%n", day, distance, eventList.get(randomEvent).getSomeEvent(trader));
             System.out.println("+-------------+----------------+----------------------------------------------------------+");
         }
+
+// test in what condition the products reached their destination
+
+//        System.out.println("+--------------+----------------+------------------+");
+//        System.out.println("|     Name     |      Price     |      Quality     |");
+//        System.out.println("+--------------+----------------+------------------+");
+//        for (Goods g: trader.goodsList) {
+//            System.out.printf("| %-12s | %-14s | %-16s |%n", g.getName(), g.getPurchasePrice(), g.getQualityObj().getName());
+//            System.out.println("+--------------+----------------+------------------+");
+//        }
+
         double proceed = 0.0;
         for (Goods g: trader.goodsList) {
             proceed += g.getPurchasePrice() * g.getQualityObj().getPriceMultiplier();
@@ -55,7 +66,7 @@ public class Main {
         else System.out.println("That was bad business");
     }
 
-    public static void purchaseGoods(Trader trader, List<Goods> goodsList) {
+    public static void purchaseGoods(Trader trader) {
         boolean isPurchase = true;
         while (isPurchase) {
             int rand = new Random().nextInt(0, 6);
@@ -64,18 +75,18 @@ public class Main {
                 trader.setMoney(trader.getMoney() - Goods.values()[rand].getPurchasePrice());
 //                System.out.printf("capacity: %s%n", trader.getCapacity());  //test capacity
 //                System.out.printf("money: %.0f%n", trader.getMoney());      //test money
-                goodsList.add(Goods.values()[rand]);
+                trader.goodsList.add(Goods.values()[rand]);
 
             } else if (trader.getMoney() <= 0 || trader.getCapacity() <= 0) {
                 isPurchase = false;
             }
         }
-        System.out.println("+--------------+----------------+----------------+");
-        System.out.println("|     Name     |      Price     |     Quality    |");
-        System.out.println("+--------------+----------------+----------------+");
-        for (Goods g: goodsList) {
-            System.out.printf("| %-12s | %-14s | %-14s |%n", g.getName(), g.getPurchasePrice(), g.getQualityObj().getName());
-            System.out.println("+--------------+----------------+----------------+");
+        System.out.println("+--------------+----------------+------------------+");
+        System.out.println("|     Name     |      Price     |      Quality     |");
+        System.out.println("+--------------+----------------+------------------+");
+        for (Goods g: trader.goodsList) {
+            System.out.printf("| %-12s | %-14s | %-16s |%n", g.getName(), g.getPurchasePrice(), g.getQualityObj().getName());
+            System.out.println("+--------------+----------------+------------------+");
         }
     }
 
