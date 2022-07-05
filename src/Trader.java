@@ -1,4 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Trader {
+    List<Goods> goodsList = new ArrayList<>();
+    List<Cities> citiesList = new ArrayList<>();
     private Double capacity;
     private Integer speed;
     private Double money;
